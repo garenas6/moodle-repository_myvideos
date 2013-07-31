@@ -78,16 +78,6 @@ class repository_myvideos extends repository {
         return $list;
     }
 
-    public function check_login() {
-        return true;
-    }
-    public function print_login() {
-        return true;
-    }
-    public function global_search() {
-        return false;
-    }
-
     /**
      * Return file path
      * @return array
@@ -98,20 +88,6 @@ class repository_myvideos extends repository {
         // in local repository
         $CFG->repository_no_delete = true;
         return array('path'=>$file, 'url'=>'');
-    }
-
-    /**
-     * Return the source information
-     *
-     * @param stdClass $filepath
-     * @return string|null
-     */
-    public function get_file_source_info($filepath) {
-        return $filepath;
-    }
-
-    public function logout() {
-        return true;
     }
 
     /**
