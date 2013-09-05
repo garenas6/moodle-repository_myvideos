@@ -14,10 +14,11 @@ require_once($CFG->dirroot.'/lib/filelib.php');
 
 $videoid = optional_param('videoid', 0, PARAM_INT);
 $thumb = optional_param('thumb', 0, PARAM_INT);
+$timestamp = optional_param('timestamp', 0, PARAM_INT); //available if $thumb
 
 $video = $DB->get_record('myvideos_video', array('id' => $videoid));
 
-if (!$video || $video->link == 1) {
+if (!$video || (!$thumb && $video->link == 1)) {
     die();
 }
 
@@ -32,10 +33,9 @@ if ($video->publiclevel == 0 && $video->userid != $USER->id &&
     die();
 }
 
-
 if ($thumb) {
     $dir = 'thumbs';
-    $resource = str_replace('.flv', '.jpg', $video->video);
+    $resource = $video->userid.'_'.$timestamp.'_'.$videoid.'.jpg';
 } else {
     $dir = 'videos';
     $resource = $video->video;
@@ -46,4 +46,3 @@ session_write_close();
 $filepath = $CFG->dataroot.'/myvideos/'.$video->userid.'/'.$dir.'/'.$resource;
 send_file($filepath, $resource);
 
-?>
