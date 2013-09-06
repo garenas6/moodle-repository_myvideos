@@ -60,10 +60,9 @@ class repository_myvideos extends repository {
             list($userid, $timestamp, $videoid) = explode('_', substr($file, 0, strpos($file, '.')));
             $title = $DB->get_field('myvideos_video', 'title', array('id' => $videoid));
 
-            $thumbparams = array('videoid='.$videoid, 'thumb=1');
+            $thumbparams = array('videoid='.$videoid, 'thumb=1','timestamp='.$timestamp);
             $thumburl = $CFG->wwwroot . '/repository/myvideos/getfile.php?' .
                 implode('&', $thumbparams);
-
             $list['list'][] = array(
                 'title' => $title,
                 'source' => $this->videos_path.$file,
