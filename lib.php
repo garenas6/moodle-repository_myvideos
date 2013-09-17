@@ -43,6 +43,11 @@ class repository_myvideos extends repository {
         $list['nosearch'] = true;
         // retrieve list of files and directories and sort them
         $fileslist = array();
+
+        if (!file_exists($this->videos_path)){
+            return $list;
+        }
+
         if ($dh = opendir($this->videos_path)) {
             while (($file = readdir($dh)) != false) {
                 if ( $file != '.' and $file !='..') {
@@ -59,6 +64,7 @@ class repository_myvideos extends repository {
             // Getting video's title.
             list($userid, $timestamp, $videoid) = explode('_', substr($file, 0, strpos($file, '.')));
             $title = $DB->get_field('myvideos_video', 'title', array('id' => $videoid));
+            $title.='.flv';
 
             $thumbparams = array('videoid='.$videoid, 'thumb=1','timestamp='.$timestamp);
             $thumburl = $CFG->wwwroot . '/repository/myvideos/getfile.php?' .
