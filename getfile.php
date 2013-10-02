@@ -35,7 +35,7 @@ if ($video->publiclevel == 0 && $video->userid != $USER->id &&
 
 if ($thumb) {
     $dir = 'thumbs';
-    $resource = $video->userid.'_'.$timestamp.'_'.$videoid.'.jpg';
+    $resource = $USER->id.'_'.$timestamp.'_'.$videoid.'.jpg';
 } else {
     $dir = 'videos';
     $resource = $video->video;
@@ -43,6 +43,5 @@ if ($thumb) {
 
 session_write_close();
 
-$filepath = $CFG->dataroot.'/myvideos/'.$video->userid.'/'.$dir.'/'.$resource;
+$filepath = $CFG->dataroot.'/myvideos/'.$USER->id.'/'.$dir.'/'.$resource;
 send_file($filepath, $resource);
-
