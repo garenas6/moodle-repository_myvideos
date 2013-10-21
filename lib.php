@@ -63,7 +63,7 @@ class repository_myvideos extends repository {
 
             // Getting video's title.
             list($userid, $timestamp, $videoid) = explode('_', substr($file, 0, strpos($file, '.')));
-            $title = $DB->get_field('myvideos_video', 'title', array('id' => $videoid));
+            $title = $DB->get_field_select('myvideos_video', 'title', $DB->sql_compare_text('video', strlen($file)). ' = ? ', array($file));
             $title.='.flv';
 
             $thumbparams = array('videoid='.$videoid, 'thumb=1','timestamp='.$timestamp);
